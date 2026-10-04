@@ -34,51 +34,8 @@
   }
   h1,h2{font-family:'Rubik',sans-serif;}
 
-  /* ---- Gate ---- */
-  #gate{
-    width:100%;
-    max-width:380px;
-    background:var(--panel);
-    border-radius:20px;
-    padding:36px 28px;
-    box-shadow:0 8px 30px rgba(0,0,0,0.06);
-    text-align:center;
-    border:1px solid var(--border);
-  }
-  #gate h1{font-size:20px;margin:0 0 6px;color:var(--dusty-blue-dark);}
-  #gate p{font-size:14px;color:var(--muted);margin:0 0 20px;}
-  #gate input{
-    width:100%;
-    padding:14px 16px;
-    border-radius:12px;
-    border:1.5px solid var(--border);
-    font-size:16px;
-    text-align:center;
-    outline:none;
-    font-family:'Rubik',sans-serif;
-    letter-spacing:1px;
-  }
-  #gate input:focus{border-color:var(--dusty-blue);}
-  #gate button{
-    width:100%;
-    margin-top:14px;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:var(--dusty-blue-dark);
-    color:#fff;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-    font-family:'Rubik',sans-serif;
-    transition:background .2s;
-  }
-  #gate button:hover{background:#4d6888;}
-  #gate .err{color:#c0564f;font-size:13px;margin-top:10px;min-height:16px;}
-
   /* ---- Content ---- */
   #content{
-    display:none;
     width:100%;
     max-width:640px;
   }
@@ -151,14 +108,6 @@
 </head>
 <body>
 
-  <div id="gate">
-    <h1>קיצורי דרך לצוות</h1>
-    <p>הדף הזה פרטי. הכניסי את קוד הגישה שקיבלת.</p>
-    <input id="pin" type="text" inputmode="text" placeholder="קוד גישה" autocomplete="off">
-    <button onclick="tryEnter()">כניסה</button>
-    <div class="err" id="err"></div>
-  </div>
-
   <div id="content">
     <div class="card">
       <h1>קיצורי דרך לצוות</h1>
@@ -207,50 +156,6 @@
       <div class="footer-note">דף פרטי לצוות · לא מיועד לשיתוף פומבי</div>
     </div>
   </div>
-
-<script>
-  var CODE_HASH = "bdccee212e85fe6c9c315188e00d3413fb70caef27395d309aa84d001b8ecc86";
-
-  async function sha256(text){
-    var enc = new TextEncoder().encode(text);
-    var buf = await crypto.subtle.digest("SHA-256", enc);
-    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
-  }
-
-  async function checkCode(code){
-    var h = await sha256(code.trim());
-    return h === CODE_HASH;
-  }
-
-  async function tryEnter(){
-    var val = document.getElementById("pin").value;
-    var ok = await checkCode(val);
-    if(ok){
-      localStorage.setItem("tk_team_pin_ok", await sha256(val + "_v1"));
-      showContent();
-    } else {
-      document.getElementById("err").textContent = "קוד שגוי, נסי שוב";
-    }
-  }
-
-  function showContent(){
-    document.getElementById("gate").style.display = "none";
-    document.getElementById("content").style.display = "block";
-  }
-
-  document.getElementById("pin").addEventListener("keydown", function(e){
-    if(e.key === "Enter") tryEnter();
-  });
-
-  // auto-unlock if already verified on this device
-  (async function(){
-    var saved = localStorage.getItem("tk_team_pin_ok");
-    if(!saved) return;
-    // we can't reverse the hash, so we just trust a previously-set flag
-    // tied to this specific build's CODE_HASH to avoid stale unlocks across code changes
-    if(saved.length === 64) showContent();
-  })();
-</script>
 
 </body>
 </html>
