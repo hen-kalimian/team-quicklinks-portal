@@ -9,22 +9,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#faf7f2;
+    --bg:#fbfcfc;
     --panel:#ffffff;
-    --dusty-blue:#8fa8c4;
-    --dusty-blue-dark:#5f7a9c;
-    --mint:#a8d8c9;
-    --mint-dark:#5fa98f;
-    --gold:#d4a857;
-    --text:#3a3a3a;
-    --muted:#8a8a8a;
-    --border:#ece7dd;
+    --dusty-blue:#7dafcb;
+    --dusty-blue-dark:#386380;
+    --dusty-blue-tint:#f0f7fb;
+    --mint:#96d8b8;
+    --mint-dark:#3a8e69;
+    --mint-tint:#f0faf5;
+    --gold:#c4952e;
+    --text:#1e2a31;
+    --muted:#6c808c;
+    --border:#d6e6ee;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
     min-height:100vh;
-    background:linear-gradient(135deg,#faf7f2 0%,#f2f0ea 100%);
+    background:linear-gradient(135deg,#fbfcfc 0%,#f0f7fb 100%);
     font-family:'Open Sans','Rubik',sans-serif;
     color:var(--text);
     display:flex;
@@ -32,7 +34,7 @@
     justify-content:center;
     padding:24px;
   }
-  h1,h2{font-family:'Rubik',sans-serif;}
+  h1,h2{font-family:'Rubik',sans-serif;letter-spacing:-0.01em;}
 
   /* ---- Content ---- */
   #content{
@@ -43,7 +45,7 @@
     background:var(--panel);
     border-radius:20px;
     padding:32px 30px;
-    box-shadow:0 8px 30px rgba(0,0,0,0.06);
+    box-shadow:0 2px 16px rgba(0,0,0,0.06);
     border:1px solid var(--border);
   }
   #content h1{font-size:22px;margin:0 0 4px;color:var(--dusty-blue-dark);}
@@ -72,7 +74,7 @@
     gap:12px;
     padding:14px 16px;
     margin-bottom:8px;
-    background:#faf9f6;
+    background:var(--dusty-blue-tint);
     border:1px solid var(--border);
     border-radius:12px;
     text-decoration:none;
@@ -81,7 +83,7 @@
   }
   .link-row:hover{
     border-color:var(--dusty-blue);
-    background:#f3f6fa;
+    background:#e0eef5;
     transform:translateY(-1px);
   }
   .link-row span.label{font-size:14.5px;font-weight:500;}
@@ -96,9 +98,9 @@
   }
   .gold-chip{
     display:inline-block;
-    background:#fbf2e2;
-    color:#9c7a2e;
-    border:1px solid #f0ddb3;
+    background:#fbf6e8;
+    color:#85601f;
+    border:1px solid #edd897;
     font-size:11px;
     padding:2px 8px;
     border-radius:20px;
