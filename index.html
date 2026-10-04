@@ -11,16 +11,15 @@
   :root{
     --bg:#fbfcfc;
     --panel:#ffffff;
-    --dusty-blue:#7dafcb;
-    --dusty-blue-dark:#386380;
-    --dusty-blue-tint:#f0f7fb;
-    --mint:#96d8b8;
-    --mint-dark:#3a8e69;
-    --mint-tint:#f0faf5;
-    --gold:#c4952e;
     --text:#1e2a31;
     --muted:#6c808c;
     --border:#d6e6ee;
+
+    --blue:#467c9c; --blue-dark:#386380; --blue-tint:#f0f7fb;
+    --mint:#3a8e69; --mint-dark:#317255; --mint-tint:#f0faf5;
+    --gold:#a67a24; --gold-dark:#85601f; --gold-tint:#fbf6e8;
+    --rose:#d14175; --rose-dark:#ae2f5f; --rose-tint:#fef1f5;
+    --gray:#506470; --gray-dark:#3c4c57; --gray-tint:#f5fafa;
   }
   *{box-sizing:border-box;}
   body{
@@ -29,138 +28,166 @@
     background:linear-gradient(135deg,#fbfcfc 0%,#f0f7fb 100%);
     font-family:'Open Sans','Rubik',sans-serif;
     color:var(--text);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
+    padding:32px 16px 60px;
   }
   h1,h2{font-family:'Rubik',sans-serif;letter-spacing:-0.01em;}
 
-  /* ---- Content ---- */
-  #content{
-    width:100%;
-    max-width:640px;
-  }
-  #content .card{
-    background:var(--panel);
-    border-radius:20px;
-    padding:32px 30px;
-    box-shadow:0 2px 16px rgba(0,0,0,0.06);
-    border:1px solid var(--border);
-  }
-  #content h1{font-size:22px;margin:0 0 4px;color:var(--dusty-blue-dark);}
-  #content .sub{color:var(--muted);font-size:13px;margin-bottom:26px;}
-  .group{margin-bottom:22px;}
+  #wrap{max-width:900px;margin:0 auto;}
+  .page-title{font-size:24px;margin:0 0 4px;color:var(--blue-dark);text-align:center;}
+  .page-sub{color:var(--muted);font-size:13px;text-align:center;margin-bottom:30px;}
+
+  .group{margin-bottom:28px;}
   .group-title{
     font-size:13px;
-    font-weight:600;
-    color:var(--mint-dark);
+    font-weight:700;
     margin-bottom:10px;
     padding-right:2px;
     display:flex;
     align-items:center;
     gap:8px;
   }
-  .group-title::before{
-    content:"";
-    width:8px;height:8px;border-radius:50%;
-    background:var(--mint-dark);
-    display:inline-block;
+  .group-title .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:14px;
   }
-  .link-row{
+  .grid.single{grid-template-columns:minmax(220px, 340px);justify-content:start;}
+
+  .card{
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    padding:14px 16px;
-    margin-bottom:8px;
-    background:var(--dusty-blue-tint);
-    border:1px solid var(--border);
-    border-radius:12px;
+    gap:14px;
+    padding:18px 18px;
+    border-radius:16px;
     text-decoration:none;
     color:var(--text);
-    transition:all .15s;
+    border:1.5px solid transparent;
+    transition:transform .15s, box-shadow .15s;
+    box-shadow:0 1px 3px rgba(30,42,49,0.06);
   }
-  .link-row:hover{
-    border-color:var(--dusty-blue);
-    background:#e0eef5;
-    transform:translateY(-1px);
+  .card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(30,42,49,0.1);}
+  .card .icon{
+    flex-shrink:0;
+    width:42px;height:42px;
+    border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
   }
-  .link-row span.label{font-size:14.5px;font-weight:500;}
-  .link-row span.arrow{color:var(--dusty-blue-dark);font-size:14px;flex-shrink:0;}
+  .card .icon svg{width:24px;height:24px;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .card .label{font-size:14.5px;font-weight:600;line-height:1.35;}
+  .card .chip{
+    display:block;
+    font-size:10.5px;
+    font-weight:600;
+    margin-top:3px;
+    opacity:.85;
+  }
+
+  .c-blue{background:var(--blue-tint);border-color:#dceaf2;} .c-blue .icon{background:#e0eef5;color:var(--blue-dark);} .c-blue .label{color:var(--blue-dark);}
+  .c-mint{background:var(--mint-tint);border-color:#dcf0e6;} .c-mint .icon{background:#ddf3e9;color:var(--mint-dark);} .c-mint .label{color:var(--mint-dark);}
+  .c-gold{background:var(--gold-tint);border-color:#f3e6bf;} .c-gold .icon{background:#f6ebc9;color:var(--gold-dark);} .c-gold .label{color:var(--gold-dark);}
+  .c-rose{background:var(--rose-tint);border-color:#fbd9e4;} .c-rose .icon{background:#fde1ea;color:var(--rose-dark);} .c-rose .label{color:var(--rose-dark);}
+  .c-gray{background:var(--gray-tint);border-color:#e3eeee;} .c-gray .icon{background:#eaf3f7;color:var(--gray-dark);} .c-gray .label{color:var(--gray-dark);}
+
+  .shortcuts-card{
+    background:linear-gradient(120deg, var(--blue-tint) 0%, var(--mint-tint) 50%, var(--rose-tint) 100%);
+    border:1.5px dashed #b9cfd8;
+  }
+  .shortcuts-card .icon{background:#ffffff;color:var(--blue-dark);}
+  .shortcuts-card .label{color:var(--text);}
+
   .footer-note{
-    margin-top:26px;
+    margin-top:30px;
     padding-top:18px;
     border-top:1px solid var(--border);
     font-size:12px;
     color:var(--muted);
     text-align:center;
   }
-  .gold-chip{
-    display:inline-block;
-    background:#fbf6e8;
-    color:#85601f;
-    border:1px solid #edd897;
-    font-size:11px;
-    padding:2px 8px;
-    border-radius:20px;
-    margin-right:8px;
-  }
 </style>
 </head>
 <body>
+<div id="wrap">
+  <h1 class="page-title">קיצורי דרך לצוות</h1>
+  <div class="page-sub">כל הקישורים השוטפים במקום אחד</div>
 
-  <div id="content">
-    <div class="card">
-      <h1>קיצורי דרך לצוות</h1>
-      <div class="sub">כל הקישורים השוטפים במקום אחד</div>
-
-      <div class="group">
-        <div class="group-title">כלים כלליים</div>
-        <a class="link-row" href="https://app.ah-la.co.il/" target="_blank" rel="noopener">
-          <span class="label">אח לעסק (ליד קונקטור)</span><span class="arrow">←</span>
-        </a>
-        <a class="link-row" href="http://talkwithkids.co.il/orders" target="_blank" rel="noopener">
-          <span class="label">מערכת הזמנות (טוני)</span><span class="arrow">←</span>
-        </a>
-      </div>
-
-      <div class="group">
-        <div class="group-title">תסריטי מכירה</div>
-        <a class="link-row" href="https://docs.google.com/document/d/11uSvWlsCWbcsDPo3MmtgHDDCshRszdza/edit" target="_blank" rel="noopener">
-          <span class="label">תסריט מכירה — הכנה לכיתה א'</span><span class="arrow">←</span>
-        </a>
-        <a class="link-row" href="https://docs.google.com/document/d/1aFRWCzJA6hgwgtGUnhmoPJU0QkbyHqlA/edit?rtpof=true" target="_blank" rel="noopener">
-          <span class="label">תסריט מכירה — הכשרה</span><span class="arrow">←</span>
-        </a>
-      </div>
-
-      <div class="group">
-        <div class="group-title">סליקה (קארדקום)</div>
-        <a class="link-row" href="https://secure.cardcom.solutions/EA/EA5/2Nlup09VXESnsoHwT0GoQ/PaymentSP" target="_blank" rel="noopener">
-          <span class="label">סליקה רגיל — הכשרה <span class="gold-chip">עד 12 תשלומים</span></span><span class="arrow">←</span>
-        </a>
-        <a class="link-row" href="https://secure.cardcom.solutions/EA/EA5/RwON97DEZ0OaQcWtNLf4Pg/PaymentSP" target="_blank" rel="noopener">
-          <span class="label">סליקה רגיל — הכנה לכיתה א' <span class="gold-chip">עד 12 תשלומים</span></span><span class="arrow">←</span>
-        </a>
-        <a class="link-row" href="https://secure.cardcom.solutions/EA/EA5/0pUHhZiVUekpAUyxUoRSA/PaymentSP" target="_blank" rel="noopener">
-          <span class="label">סליקה הוראת קבע <span class="gold-chip">עד 6 תשלומים</span></span><span class="arrow">←</span>
-        </a>
-      </div>
-
-      <div class="group">
-        <div class="group-title">מעקב משלוחים</div>
-        <a class="link-row" href="https://docs.google.com/spreadsheets/u/0/d/1EEXtbeR9gRp5dUFW7t4xCCFGq3x3dlum/edit?fromCopy=true&ct=2&cct=0" target="_blank" rel="noopener">
-          <span class="label">משלוחים עסקאות שני — אקסל</span><span class="arrow">←</span>
-        </a>
-        <a class="link-row" href="https://docs.google.com/spreadsheets/d/1DN9pWQW41P515h-GJTY2fFadzhs-XHsD/edit?usp=sharing&ouid=113028012417499718270&rtpof=true&sd=true" target="_blank" rel="noopener">
-          <span class="label">משלוחים של לני — אקסל</span><span class="arrow">←</span>
-        </a>
-      </div>
-
-      <div class="footer-note">דף פרטי לצוות · לא מיועד לשיתוף פומבי</div>
+  <div class="group">
+    <div class="grid single">
+      <a class="card shortcuts-card" href="shortcuts.html">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M11 2 2 13h7l-1 9 10-13h-7l1-9z"/></svg></span>
+        <span class="label">קיצורי דרך שימושיים<span class="chip">תשובות מוכנות להעתקה</span></span>
+      </a>
     </div>
   </div>
 
+  <div class="group">
+    <div class="group-title" style="color:var(--blue-dark)"><span class="dot" style="background:var(--blue-dark)"></span>מערכת הזמנות</div>
+    <div class="grid single">
+      <a class="card c-blue" href="http://talkwithkids.co.il/orders" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"/></svg></span>
+        <span class="label">מערכת הזמנות (טוני)</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title" style="color:var(--gold-dark)"><span class="dot" style="background:var(--gold-dark)"></span>סליקה (קארדקום)</div>
+    <div class="grid">
+      <a class="card c-gold" href="https://secure.cardcom.solutions/EA/EA5/2Nlup09VXESnsoHwT0GoQ/PaymentSP" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><line x1="2.5" y1="9.5" x2="21.5" y2="9.5"/><line x1="5.5" y1="14.5" x2="10.5" y2="14.5"/></svg></span>
+        <span class="label">סליקה רגיל, הכשרה<span class="chip">עד 12 תשלומים</span></span>
+      </a>
+      <a class="card c-gold" href="https://secure.cardcom.solutions/EA/EA5/RwON97DEZ0OaQcWtNLf4Pg/PaymentSP" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><line x1="2.5" y1="9.5" x2="21.5" y2="9.5"/><line x1="5.5" y1="14.5" x2="10.5" y2="14.5"/></svg></span>
+        <span class="label">סליקה רגיל, הכנה לכיתה א'<span class="chip">עד 12 תשלומים</span></span>
+      </a>
+      <a class="card c-gold" href="https://secure.cardcom.solutions/EA/EA5/0pUHhZiVUekpAUyxUoRSA/PaymentSP" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><line x1="2.5" y1="9.5" x2="21.5" y2="9.5"/><line x1="5.5" y1="14.5" x2="10.5" y2="14.5"/></svg></span>
+        <span class="label">סליקה הוראת קבע<span class="chip">עד 6 תשלומים</span></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title" style="color:var(--mint-dark)"><span class="dot" style="background:var(--mint-dark)"></span>מעקב משלוחים</div>
+    <div class="grid">
+      <a class="card c-mint" href="https://docs.google.com/spreadsheets/u/0/d/1EEXtbeR9gRp5dUFW7t4xCCFGq3x3dlum/edit?fromCopy=true&ct=2&cct=0" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5-9 4.5-9-4.5Z"/><path d="M3 7.5v9L12 21l9-4.5v-9"/><path d="M12 12v9"/></svg></span>
+        <span class="label">האקסל של שני</span>
+      </a>
+      <a class="card c-mint" href="https://docs.google.com/spreadsheets/d/1DN9pWQW41P515h-GJTY2fFadzhs-XHsD/edit?usp=sharing&ouid=113028012417499718270&rtpof=true&sd=true" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5-9 4.5-9-4.5Z"/><path d="M3 7.5v9L12 21l9-4.5v-9"/><path d="M12 12v9"/></svg></span>
+        <span class="label">האקסל של לני</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title" style="color:var(--rose-dark)"><span class="dot" style="background:var(--rose-dark)"></span>תסריטי מכירה</div>
+    <div class="grid">
+      <a class="card c-rose" href="https://docs.google.com/document/d/11uSvWlsCWbcsDPo3MmtgHDDCshRszdza/edit" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 2h9l4 4v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/><path d="M14 2v5h5"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="14" y2="16"/></svg></span>
+        <span class="label">תסריט מכירה, הכנה לכיתה א'</span>
+      </a>
+      <a class="card c-rose" href="https://docs.google.com/document/d/1aFRWCzJA6hgwgtGUnhmoPJU0QkbyHqlA/edit?rtpof=true" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 2h9l4 4v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/><path d="M14 2v5h5"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="14" y2="16"/></svg></span>
+        <span class="label">תסריט מכירה, הכשרה</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title" style="color:var(--gray-dark)"><span class="dot" style="background:var(--gray-dark)"></span>אח לעסק</div>
+    <div class="grid single">
+      <a class="card c-gray" href="https://app.ah-la.co.il/" target="_blank" rel="noopener">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-4 4V5Z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="12.5" x2="13" y2="12.5"/></svg></span>
+        <span class="label">אח לעסק (ליד קונקטור)</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-note">דף פרטי לצוות, לא מיועד לשיתוף פומבי</div>
+</div>
 </body>
 </html>

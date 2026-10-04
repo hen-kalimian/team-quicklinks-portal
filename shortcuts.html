@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>קיצורי דרך שימושיים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfcfc;
+    --panel:#ffffff;
+    --text:#1e2a31;
+    --muted:#6c808c;
+    --border:#d6e6ee;
+
+    --blue:#467c9c; --blue-dark:#386380; --blue-tint:#f0f7fb;
+    --mint:#3a8e69; --mint-dark:#317255; --mint-tint:#f0faf5;
+    --gold:#a67a24; --gold-dark:#85601f; --gold-tint:#fbf6e8;
+    --rose:#d14175; --rose-dark:#ae2f5f; --rose-tint:#fef1f5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(135deg,#fbfcfc 0%,#f0f7fb 100%);
+    font-family:'Open Sans','Rubik',sans-serif;
+    color:var(--text);
+    padding:24px 16px 60px;
+  }
+  h1{font-family:'Rubik',sans-serif;letter-spacing:-0.01em;}
+
+  #wrap{max-width:720px;margin:0 auto;}
+
+  .back{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    text-decoration:none;
+    color:var(--blue-dark);
+    font-weight:600;
+    font-size:14px;
+    margin-bottom:18px;
+    padding:8px 14px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:10px;
+  }
+  .back:hover{background:var(--blue-tint);}
+
+  .page-title{font-size:22px;margin:0 0 4px;color:var(--blue-dark);text-align:center;}
+  .page-sub{color:var(--muted);font-size:13px;text-align:center;margin-bottom:26px;}
+
+  .item{
+    background:var(--panel);
+    border:1.5px solid var(--border);
+    border-radius:16px;
+    padding:16px 18px;
+    margin-bottom:14px;
+    box-shadow:0 1px 3px rgba(30,42,49,0.05);
+  }
+  .item-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .item .icon{
+    flex-shrink:0;
+    width:38px;height:38px;
+    border-radius:11px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .item .icon svg{width:21px;height:21px;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+  .item .cmd{font-family:'Rubik',sans-serif;font-weight:700;font-size:16px;flex:1;}
+  .copy-btn{
+    flex-shrink:0;
+    width:34px;height:34px;
+    border-radius:50%;
+    border:none;
+    background:var(--blue-dark);
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    line-height:1;
+    transition:transform .12s, background .2s;
+  }
+  .copy-btn:hover{transform:scale(1.07);}
+  .copy-btn.copied{background:var(--mint-dark);}
+  .box{
+    background:var(--blue-tint);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:13.5px;
+    line-height:1.7;
+    white-space:pre-wrap;
+    color:var(--text);
+  }
+
+  .c0 .icon{background:#e0eef5;color:var(--blue-dark);} .c0 .cmd{color:var(--blue-dark);}
+  .c1 .icon{background:#ddf3e9;color:var(--mint-dark);} .c1 .cmd{color:var(--mint-dark);}
+  .c2 .icon{background:#f6ebc9;color:var(--gold-dark);} .c2 .cmd{color:var(--gold-dark);}
+  .c3 .icon{background:#fde1ea;color:var(--rose-dark);} .c3 .cmd{color:var(--rose-dark);}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <a class="back" href="index.html">→ חזרה לקיצורי דרך</a>
+  <h1 class="page-title">קיצורי דרך שימושיים</h1>
+  <div class="page-sub">לחיצה על העיגול מעתיקה את הטקסט</div>
+
+  <div id="list"></div>
+</div>
+
+<script>
+  const ICONS = {
+    bank: '<path d="M3 10 12 4l9 6"/><path d="M4 10v9h16v-9"/><line x1="8" y1="12" x2="8" y2="17"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="16" y1="12" x2="16" y2="17"/><line x1="3" y1="19" x2="21" y2="19"/>',
+    game: '<path d="M6 9h12a3 3 0 0 1 3 3v3a3 3 0 0 1-5.2 2L14 15h-4l-1.8 2A3 3 0 0 1 3 15v-3a3 3 0 0 1 3-3Z"/><path d="M8.5 10.5v3M7 12h3"/><circle cx="15.2" cy="11.2" r=".4"/><circle cx="17" cy="13" r=".4"/>',
+    heart: '<path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/>',
+    hourglass: '<path d="M6 3h12M6 21h12"/><path d="M7 3v4.5a5 5 0 0 0 5 5 5 5 0 0 0 5-5V3M7 21v-4.5a5 5 0 0 1 5-5 5 5 0 0 1 5 5V21"/>',
+    trophy: '<path d="M8 3h8v4a4 4 0 0 1-8 0V3Z"/><path d="M6 5H4a2 2 0 0 0 0 4h2M18 5h2a2 2 0 1 1 0 4h-2"/><path d="M12 11v5M9 21h6M10 17h4v4h-4z"/>',
+    star: '<path d="M12 3l2.7 5.8 6.3.6-4.8 4.2 1.4 6.2L12 16.9 6.4 19.8l1.4-6.2L3 8.4l6.3-.6z"/>',
+    video: '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3Z"/>',
+    cap: '<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/><path d="M22 8v5"/>',
+    check: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l2 2 3-3M7 15h7"/>',
+    blocks: '<rect x="3" y="14" width="7" height="6"/><rect x="14" y="14" width="7" height="6"/><rect x="8.5" y="6" width="7" height="6"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  };
+
+  const ITEMS = [
+    { cmd: '/בנק', icon: 'bank', text: 'חן קלימיאן\nבנק לאומי 10\nסניף 669\nמספר חשבון 6125608' },
+    { cmd: '/משחק', icon: 'game', text: 'הנה קישור למשחקים לדוגמה ❤️\ntalkwithkids.co.il/letters1\nזו ממש טעימה קטנטנה מהתוכנית ״הכנה לכיתה א׳ בקלות״ 😊' },
+    { cmd: '/סרבןלפני', icon: 'heart', text: 'איזו מחשבה נהדרת שמראה כמה ההיכרות והקשר שלכם חזקים ❤️\n\nהמשחקים הם משחקים דיגיטליים קצרים וקלילים למחשב או לטאבלט והם לא אמורים להימשך יותר מ-15-30 דקות בשבוע. ההתחלה היא יישור קו כי ילדים לומדים מספרים ואת א-ב-ג-ד לפני השאר אז יש הרבה ילדים שעבורם זו חוויית הצלחה שמדרבנת אותם 💪\n\nבנוסף כדאי לאפשר בחירה. תוכלי להגיד שבכל שבת למשל, נחליט באילו ימים בשבוע הבא נעשה ״חוג אמא״ ואם תסמנו נניח את ימים שני וחמישי אז תכתבו בימים אלו בטבלה האם זה זמן מסך למשחקים של חן או זמן למשחק בערכה (חוברת או משחק) ותתקדמו לפי הנושא השבועי (לא להגיד זמן ללמוד או לעשות שיעורים אלא זמן משחק) 🥳\n\nאפשר גם לספר שאתם מתחילים בחוג חדש שבו תשלח אליכם מתנה עם שליח ולאורך החוג אתם תצברו נקודות כשבכל פעם שאתם תעשו ״חוג אמא״ אתם תקבלו נקודה וכשתגיעו ל-5 נקודות תבחרו ״בונוס אמא״: ללכת יחד להליכה או לגלידריה או לפיצריה (למשל). קחי את זה לכיוונים שלך (משחק יחד בסוני, הכנת צמידים, הכללל) 😊\n\nבסופו של דבר זה עובד משתי סיבות מרכזיות: זה מקליל את כל עניין הלמידה שעד היום לא נתפס כמשחק וסוף סוף לא אמא מלמדת אלא מישהי אחרת במסך ואמא רק נוכחת, ואז זה מייצר מוטיבציה גבוהה. והסיבה השנייה היא שזה זמן איכות עם אמא שמוקדש רק להם, ואז מעבר לתרומה הלימודית האדירה זו גם תרומה רגשית שאין לה תחליף ❤️' },
+    { cmd: '/בעליהכנה', icon: 'hourglass', text: 'אהובה ❤️\n\nאני כן רוצה לאפשר לך את ההטבה, כי חשוב לי לתת מקום להתלבטות שלך באמת וגם אני כזאת שלמרות שאני רוצה משהו לוקח לי רגע 😜\n\nיחד עם זאת, כדי לשמור על הוגנות כלפי האימהות שכבר נרשמו במסגרת הזמן שנקבע - אני יכולה לשמור את ההטבה עבורך עד מחר לכל המאוחר באהבה.\n\nאם תרגישי שזה נכון לך עד אז ההטבה מחכה לך באהבה ואם לא, זה גם לגמרי בסדר, ואני כאן לכל שאלה או דיוק.\n\nאולי בינתיים תרצי לראות את תמצית השיטה בהדרכה הקצרה שלי של 12 דקות כאן:\nhttp://talkwithkids.co.il/free-tutorial\n\nואת כל הפרטים כאן:\nhttp://talkwithkids.co.il/course' },
+    { cmd: '/בעליהכשרה', icon: 'trophy', text: 'מהממת ❤️\n\nאני כן רוצה לאפשר לך את ההטבה, כי חשוב לי לתת מקום להתלבטות שלך באמת וגם אני כזאת שרגע ממתינה גם אם אני כבר יודעת שזה מה שאני רוצה 😜\n\nיחד עם זאת, כדי לשמור על הוגנות כלפי נשות החינוך והטיפול שנרשמו בזמן שהוגדר, אני יכולה לשמור את ההטבה עבורך לכל המאוחר ובאהבה עד הערב כמו שביקשת ואז המחיר יחזור להיות כמו לכולן 10,790.\n\nאם תרגישי שזה נכון לך עד אז ההטבה מחכה לך באהבה ואם לא, זה גם לגמרי בסדר, ואני כאן לכל שאלה או דיוק.\n\nאבל כן אגיד שאני רואה אותך עושה איתי דרך, עוזרת לילדים ומשמחת הורים ועל הדרך גם מרוויחה כסף ומחזירה את ההשקעה במהירות!\n\nאולי בינתיים תרצי לצפות בהדרכה קצרה של 15 דקות בה הסברתי על השיטה:\nhttp://talkwithkids.co.il/teach-tutorial\n\nאו בפירוט על התוכנית כאן:\nhttp://talkwithkids.co.il/teach' },
+    { cmd: '/בהצלחה', icon: 'star', text: 'מוזמנת להמשיך לעקוב ברשתות לטיפים ורעיונות ושיהיה בהצלחה ❤️\nאני כאן בשבילך באהבה' },
+    { cmd: '/הקלטה', icon: 'video', text: 'נשמע שאת רוצה להתחיל לעשות משהו ולנצל את הזמן, ונראה לי שהכי מהיר יהיה אם תפני שעה לצפייה בהדרכה שלי שהתקיימה אתמול להורים על לימוד אותיות וקריאה, היא תהיה זמינה עד חצות ללא עלות, לשלוח לך?' },
+    { cmd: '/מורה', icon: 'cap', text: 'איזו מדהימה שרצית לראות איך את יכולה לעזור יותר לילדים!\n\nאז אם את כבר כאן, אני רוצה לשתף אותך שבדיוק השבוע פתחתי מחזור נוסף לתוכנית ההכשרה שלי לנשות חינוך וטיפול, זו תוכנית הדגל שלי ואני הולכת ללוות אותך מקצועית ועסקית ואם תרצי - גם לגרום לך להרוויח מזה לא מעט כסף 😅\n\nההרשמה פתוחה עד הסופ״ש ורק ל-40 משתתפות וכבר 37 בפנים 💪\n\nאם זה רלוונטי כתבי לי ואדאג לחזור אלייך\nhttp://talkwithkids.co.il/teach\nלדעתי זה יתאים יותר לרמה שלך❤️' },
+    { cmd: '/מבדק', icon: 'check', text: 'זה הקישור למבדק ומשחקים חינמיים שהכנתי לילדים שעולים לכיתה א׳ מחכה לשמוע ממך איך היה לך ❤️\nhttps://www.talkwithkids.co.il/freetest\nעדכני שההודעה הגיעה אלייך' },
+    { cmd: '/מוכנות', icon: 'blocks', text: 'ככל שילדים שולטים מוקדם יותר באותיות ובמספרים הם מתנסים יותר בכתיבה ואז גם שליפת האותיות מהירה יותר וגם ההתנסות עם הצלילים מוגברת וכשמתחילים ללמוד לקרוא הכל הרבה יותר קל ובעיקר מחזק את הביטחון העצמי של הילד ולכן לגמרי להתחיל וכמה שיותר מוקדם ❤️\n\nמכיוון שמקבלים גם את קוראים בקלות במתנה וללא הגבלת זמן, תוכלו בנחת כשתסיימו עם המספרים והאותיות לעבור לקריאה גם אם זה רק בעוד שנה 😊\n\nההטבה זמינה לכם כרגע ולא הייתי מוותרת במקומך 🙏🏻\nכדאי להתחיל בתוכנית הרבה לפני כיתה א׳ ולתת יתרון ובעיקר ביטחון עצמי❤️\n\nמה את אומרת?' },
+    { cmd: '/אתר', icon: 'globe', text: 'http://talkwithkids.co.il' },
+  ];
+
+  const list = document.getElementById('list');
+  ITEMS.forEach((it, i) => {
+    const colorClass = 'c' + (i % 4);
+    const div = document.createElement('div');
+    div.className = 'item ' + colorClass;
+    div.innerHTML = `
+      <div class="item-head">
+        <span class="icon"><svg viewBox="0 0 24 24">${ICONS[it.icon]}</svg></span>
+        <span class="cmd">${it.cmd}</span>
+        <button class="copy-btn" type="button">+</button>
+      </div>
+      <div class="box"></div>
+    `;
+    div.querySelector('.box').textContent = it.text;
+    const btn = div.querySelector('.copy-btn');
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(it.text);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = it.text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      btn.textContent = '✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '+'; btn.classList.remove('copied'); }, 1500);
+    });
+    list.appendChild(div);
+  });
+</script>
+</body>
+</html>
