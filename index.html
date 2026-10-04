@@ -32,11 +32,11 @@
   }
   h1,h2{font-family:'Rubik',sans-serif;letter-spacing:-0.01em;}
 
-  #wrap{max-width:900px;margin:0 auto;}
+  #wrap{max-width:620px;margin:0 auto;}
   .page-title{font-size:24px;margin:0 0 4px;color:var(--blue-dark);text-align:center;}
-  .page-sub{color:var(--muted);font-size:13px;text-align:center;margin-bottom:30px;}
+  .page-sub{color:var(--muted);font-size:13px;text-align:center;margin-bottom:26px;}
 
-  .group{margin-bottom:28px;}
+  .group{margin-bottom:22px;}
   .group-title{
     font-size:13px;
     font-weight:700;
@@ -50,31 +50,34 @@
 
   .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns:repeat(2, 1fr);
     gap:14px;
   }
-  .grid.single{grid-template-columns:minmax(220px, 340px);justify-content:start;}
 
   .card{
     display:flex;
+    flex-direction:column;
     align-items:center;
-    gap:14px;
-    padding:18px 18px;
-    border-radius:16px;
+    justify-content:center;
+    gap:10px;
+    aspect-ratio:1;
+    padding:16px;
+    border-radius:18px;
     text-decoration:none;
     color:var(--text);
     border:1.5px solid transparent;
     transition:transform .15s, box-shadow .15s;
     box-shadow:0 1px 3px rgba(30,42,49,0.06);
+    text-align:center;
   }
   .card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(30,42,49,0.1);}
   .card .icon{
     flex-shrink:0;
-    width:42px;height:42px;
-    border-radius:12px;
+    width:50px;height:50px;
+    border-radius:14px;
     display:flex;align-items:center;justify-content:center;
   }
-  .card .icon svg{width:24px;height:24px;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .card .icon svg{width:27px;height:27px;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
   .card .label{font-size:14.5px;font-weight:600;line-height:1.35;}
   .card .chip{
     display:block;
@@ -113,17 +116,12 @@
   <div class="page-sub">כל הקישורים השוטפים במקום אחד</div>
 
   <div class="group">
-    <div class="grid single">
+    <div class="group-title" style="color:var(--blue-dark)"><span class="dot" style="background:var(--blue-dark)"></span>כלים כלליים</div>
+    <div class="grid">
       <a class="card shortcuts-card" href="shortcuts.html">
         <span class="icon"><svg viewBox="0 0 24 24"><path d="M11 2 2 13h7l-1 9 10-13h-7l1-9z"/></svg></span>
         <span class="label">קיצורי דרך שימושיים<span class="chip">תשובות מוכנות להעתקה</span></span>
       </a>
-    </div>
-  </div>
-
-  <div class="group">
-    <div class="group-title" style="color:var(--blue-dark)"><span class="dot" style="background:var(--blue-dark)"></span>מערכת הזמנות</div>
-    <div class="grid single">
       <a class="card c-blue" href="http://talkwithkids.co.il/orders" target="_blank" rel="noopener">
         <span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"/></svg></span>
         <span class="label">מערכת הזמנות (טוני)</span>
@@ -179,7 +177,7 @@
 
   <div class="group">
     <div class="group-title" style="color:var(--gray-dark)"><span class="dot" style="background:var(--gray-dark)"></span>אח לעסק</div>
-    <div class="grid single">
+    <div class="grid">
       <a class="card c-gray" href="https://app.ah-la.co.il/" target="_blank" rel="noopener">
         <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-4 4V5Z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="12.5" x2="13" y2="12.5"/></svg></span>
         <span class="label">אח לעסק (ליד קונקטור)</span>
