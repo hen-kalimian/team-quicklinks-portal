@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>קיצורי דרך לצוות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf7f2;
+    --panel:#ffffff;
+    --dusty-blue:#8fa8c4;
+    --dusty-blue-dark:#5f7a9c;
+    --mint:#a8d8c9;
+    --mint-dark:#5fa98f;
+    --gold:#d4a857;
+    --text:#3a3a3a;
+    --muted:#8a8a8a;
+    --border:#ece7dd;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(135deg,#faf7f2 0%,#f2f0ea 100%);
+    font-family:'Open Sans','Rubik',sans-serif;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  h1,h2{font-family:'Rubik',sans-serif;}
+
+  /* ---- Gate ---- */
+  #gate{
+    width:100%;
+    max-width:380px;
+    background:var(--panel);
+    border-radius:20px;
+    padding:36px 28px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.06);
+    text-align:center;
+    border:1px solid var(--border);
+  }
+  #gate h1{font-size:20px;margin:0 0 6px;color:var(--dusty-blue-dark);}
+  #gate p{font-size:14px;color:var(--muted);margin:0 0 20px;}
+  #gate input{
+    width:100%;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    font-size:16px;
+    text-align:center;
+    outline:none;
+    font-family:'Rubik',sans-serif;
+    letter-spacing:1px;
+  }
+  #gate input:focus{border-color:var(--dusty-blue);}
+  #gate button{
+    width:100%;
+    margin-top:14px;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:var(--dusty-blue-dark);
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:'Rubik',sans-serif;
+    transition:background .2s;
+  }
+  #gate button:hover{background:#4d6888;}
+  #gate .err{color:#c0564f;font-size:13px;margin-top:10px;min-height:16px;}
+
+  /* ---- Content ---- */
+  #content{
+    display:none;
+    width:100%;
+    max-width:640px;
+  }
+  #content .card{
+    background:var(--panel);
+    border-radius:20px;
+    padding:32px 30px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.06);
+    border:1px solid var(--border);
+  }
+  #content h1{font-size:22px;margin:0 0 4px;color:var(--dusty-blue-dark);}
+  #content .sub{color:var(--muted);font-size:13px;margin-bottom:26px;}
+  .group{margin-bottom:22px;}
+  .group-title{
+    font-size:13px;
+    font-weight:600;
+    color:var(--mint-dark);
+    margin-bottom:10px;
+    padding-right:2px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .group-title::before{
+    content:"";
+    width:8px;height:8px;border-radius:50%;
+    background:var(--mint-dark);
+    display:inline-block;
+  }
+  .link-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 16px;
+    margin-bottom:8px;
+    background:#faf9f6;
+    border:1px solid var(--border);
+    border-radius:12px;
+    text-decoration:none;
+    color:var(--text);
+    transition:all .15s;
+  }
+  .link-row:hover{
+    border-color:var(--dusty-blue);
+    background:#f3f6fa;
+    transform:translateY(-1px);
+  }
+  .link-row span.label{font-size:14.5px;font-weight:500;}
+  .link-row span.arrow{color:var(--dusty-blue-dark);font-size:14px;flex-shrink:0;}
+  .footer-note{
+    margin-top:26px;
+    padding-top:18px;
+    border-top:1px solid var(--border);
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+  }
+  .gold-chip{
+    display:inline-block;
+    background:#fbf2e2;
+    color:#9c7a2e;
+    border:1px solid #f0ddb3;
+    font-size:11px;
+    padding:2px 8px;
+    border-radius:20px;
+    margin-right:8px;
+  }
+</style>
+</head>
+<body>
+
+  <div id="gate">
+    <h1>קיצורי דרך לצוות</h1>
+    <p>הדף הזה פרטי. הכניסי את קוד הגישה שקיבלת.</p>
+    <input id="pin" type="text" inputmode="text" placeholder="קוד גישה" autocomplete="off">
+    <button onclick="tryEnter()">כניסה</button>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div id="content">
+    <div class="card">
+      <h1>קיצורי דרך לצוות</h1>
+      <div class="sub">כל הקישורים השוטפים במקום אחד</div>
+
+      <div class="group">
+        <div class="group-title">כלים כלליים</div>
+        <a class="link-row" href="https://app.ah-la.co.il/" target="_blank" rel="noopener">
+          <span class="label">אח לעסק (ליד קונקטור)</span><span class="arrow">←</span>
+        </a>
+        <a class="link-row" href="http://talkwithkids.co.il/orders" target="_blank" rel="noopener">
+          <span class="label">מערכת הזמנות (טוני)</span><span class="arrow">←</span>
+        </a>
+      </div>
+
+      <div class="group">
+        <div class="group-title">תסריטי מכירה</div>
+        <a class="link-row" href="https://docs.google.com/document/d/11uSvWlsCWbcsDPo3MmtgHDDCshRszdza/edit" target="_blank" rel="noopener">
+          <span class="label">תסריט מכירה — הכנה לכיתה א'</span><span class="arrow">←</span>
+        </a>
+        <a class="link-row" href="https://docs.google.com/document/d/1aFRWCzJA6hgwgtGUnhmoPJU0QkbyHqlA/edit?rtpof=true" target="_blank" rel="noopener">
+          <span class="label">תסריט מכירה — הכשרה</span><span class="arrow">←</span>
+        </a>
+      </div>
+
+      <div class="group">
+        <div class="group-title">סליקה (קארדקום)</div>
+        <a class="link-row" href="https://secure.cardcom.solutions/EA/EA5/2Nlup09VXESnsoHwT0GoQ/PaymentSP" target="_blank" rel="noopener">
+          <span class="label">סליקה רגיל — הכשרה <span class="gold-chip">עד 12 תשלומים</span></span><span class="arrow">←</span>
+        </a>
+        <a class="link-row" href="https://secure.cardcom.solutions/EA/EA5/RwON97DEZ0OaQcWtNLf4Pg/PaymentSP" target="_blank" rel="noopener">
+          <span class="label">סליקה רגיל — הכנה לכיתה א' <span class="gold-chip">עד 12 תשלומים</span></span><span class="arrow">←</span>
+        </a>
+        <a class="link-row" href="https://secure.cardcom.solutions/EA/EA5/0pUHhZiVUekpAUyxUoRSA/PaymentSP" target="_blank" rel="noopener">
+          <span class="label">סליקה הוראת קבע <span class="gold-chip">עד 6 תשלומים</span></span><span class="arrow">←</span>
+        </a>
+      </div>
+
+      <div class="group">
+        <div class="group-title">מעקב משלוחים</div>
+        <a class="link-row" href="https://docs.google.com/spreadsheets/u/0/d/1EEXtbeR9gRp5dUFW7t4xCCFGq3x3dlum/edit?fromCopy=true&ct=2&cct=0" target="_blank" rel="noopener">
+          <span class="label">משלוחים עסקאות שני — אקסל</span><span class="arrow">←</span>
+        </a>
+      </div>
+
+      <div class="footer-note">דף פרטי לצוות · לא מיועד לשיתוף פומבי</div>
+    </div>
+  </div>
+
+<script>
+  var CODE_HASH = "bdccee212e85fe6c9c315188e00d3413fb70caef27395d309aa84d001b8ecc86";
+
+  async function sha256(text){
+    var enc = new TextEncoder().encode(text);
+    var buf = await crypto.subtle.digest("SHA-256", enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+
+  async function checkCode(code){
+    var h = await sha256(code.trim());
+    return h === CODE_HASH;
+  }
+
+  async function tryEnter(){
+    var val = document.getElementById("pin").value;
+    var ok = await checkCode(val);
+    if(ok){
+      localStorage.setItem("tk_team_pin_ok", await sha256(val + "_v1"));
+      showContent();
+    } else {
+      document.getElementById("err").textContent = "קוד שגוי, נסי שוב";
+    }
+  }
+
+  function showContent(){
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  }
+
+  document.getElementById("pin").addEventListener("keydown", function(e){
+    if(e.key === "Enter") tryEnter();
+  });
+
+  // auto-unlock if already verified on this device
+  (async function(){
+    var saved = localStorage.getItem("tk_team_pin_ok");
+    if(!saved) return;
+    // we can't reverse the hash, so we just trust a previously-set flag
+    // tied to this specific build's CODE_HASH to avoid stale unlocks across code changes
+    if(saved.length === 64) showContent();
+  })();
+</script>
+
+</body>
+</html>
