@@ -120,6 +120,15 @@ LOCATION:שיבת ציון 49\, ראשון לציון
 COLOR:blue
 END:VEVENT
 BEGIN:VEVENT
+UID:team-meeting-20270927@talkwithkids.co.il
+DTSTAMP:20261029T120000Z
+DTSTART;TZID=Asia/Jerusalem:20270927T093000
+DTEND;TZID=Asia/Jerusalem:20270927T113000
+SUMMARY:פגישת צוות אצל חן
+LOCATION:שיבת ציון 49\, ראשון לציון
+COLOR:blue
+END:VEVENT
+BEGIN:VEVENT
 UID:team-meeting-20271004@talkwithkids.co.il
 DTSTAMP:20261029T120000Z
 DTSTART;TZID=Asia/Jerusalem:20271004T093000
