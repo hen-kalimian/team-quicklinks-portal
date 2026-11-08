@@ -101,6 +101,20 @@
     color:var(--text);
   }
 
+  .link-btn{
+    display:block;
+    margin:10px auto 0;
+    padding:9px 18px;
+    border:none;
+    border-radius:10px;
+    background:var(--rose-dark);
+    color:#fff;
+    font-family:'Rubik',sans-serif;
+    font-weight:500;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .link-btn.copied{background:var(--mint-dark);}
   .c0 .icon{background:#e0eef5;color:var(--blue-dark);} .c0 .cmd{color:var(--blue-dark);}
   .c1 .icon{background:#ddf3e9;color:var(--mint-dark);} .c1 .cmd{color:var(--mint-dark);}
   .c2 .icon{background:#f6ebc9;color:var(--gold-dark);} .c2 .cmd{color:var(--gold-dark);}
@@ -163,6 +177,7 @@
     { cmd: '/ביטולהכשרה', icon: 'cap', text: "היי יקרה ❤️  מכיוון שיש לך את האפשרות להשלים את התכנים ולהיכנס אליהם ללא הגבלת זמן אז מהבחינה הזו הכל מעולה. תוכלי להמשיך גם בעוד שנה או שנתיים כשזה יהיה לך יותר רלוונטי או עכשיו אם תחליטי בכל זאת להיכנס לתוכנית שלך כבר השבוע (קבלי עלייך את האתגר ותעדכני שצפית!!).\nמבחינת הליווי העסקי שפתוח בפניך לשנה אני אאפשר לך שהוא לא יתחיל מאז שנרשמת אלא מהיום או בעוד חודש-חודשיים, עד שתרגישי פנויה יותר ונתחיל משם וכמובן גם בזמן הזה תוכלי להצטרף לזומים באהבה גדולה. לכן יד ביד אני איתך ואם תרצי שנקבע פגישה בזום ואחדיר בך גם מוטיבציה מהצד שלי אז בשמחה רבה באהבה וללא עלות 😊\nהתוכנית שלך ללא הגבלת זמן כך שגם אם עכשיו זה לא הזמן ותרצי רגע לעצור זה אפשרי ותוכלי להמשיך בעוד כמה שבועות או חודשים לבחירתך. אם זה יעזור והערכה לא נפתחה ותרצי לשלוח אותה אליי אני אוכל לזכות ב-249 שח כאשר הערכה תגיע❤️\nבגדול במקומך הייתי משאירה הכל כמו שהוא ומקבלת החלטה על שינוי אווירה להרפתקאה של כיף והצלחה, ובכל מקרה, אל תוותרי, שאפת וזה יקרה 💪👑  (את התוכנית כמובן שלא ניתן לבטל לפי חוק הגנת הצרכן למוצרים דיגיטליים)." },
     { cmd: '/סרטון הסבר הכשרה', icon: 'video', text: "https://hen-kalimian.github.io/talkwithkids-training-links/training-video.html" },
     { cmd: '/סרטון הסבר הכנה', icon: 'video', text: "https://hen-kalimian.github.io/talkwithkids-training-links/prep-video.html" },
+    { cmd: '/סילבוס', icon: 'cap', link: 'https://hen-kalimian.github.io/talkwithkids-training-links/syllabus.html', linkLabel: 'העתקת קישור לסילבוס', text: 'זה הסילבוס לתוכנית ההכשרה המקצועית והעסקית: https://hen-kalimian.github.io/talkwithkids-training-links/syllabus.html\nואם תרצי את הפירוט המלא הוא נמצא כאן\nhttp://talkwithkids.co.il/sale1' },
     { cmd: '/כתובת', icon: 'globe', text: "הכתובת היא שיבת ציון 49 ראשון לציון, נכנסים בשער הקטן להולכי הרגל וממשיכים בשביל עד לבית האחרון בשביל (הבית השלישי)" },
   ];
 
@@ -196,6 +211,28 @@
       btn.classList.add('copied');
       setTimeout(() => { btn.textContent = '+'; btn.classList.remove('copied'); }, 1500);
     });
+    if (it.link) {
+      const lb = document.createElement('button');
+      lb.type = 'button';
+      lb.className = 'link-btn';
+      lb.textContent = it.linkLabel || 'העתקת קישור';
+      lb.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(it.link);
+        } catch (e) {
+          const ta = document.createElement('textarea');
+          ta.value = it.link;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        lb.textContent = '✓ הקישור הועתק';
+        lb.classList.add('copied');
+        setTimeout(() => { lb.textContent = it.linkLabel || 'העתקת קישור'; lb.classList.remove('copied'); }, 1500);
+      });
+      div.appendChild(lb);
+    }
     list.appendChild(div);
   });
 </script>
