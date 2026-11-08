@@ -117,6 +117,19 @@
     color:var(--muted);
     text-align:center;
   }
+  .search{margin-bottom:20px;}
+  .search input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:14px;background:#fff;font-family:'Open Sans','Rubik',sans-serif;font-size:16px;color:var(--text);outline:none;}
+  .search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(70,124,156,.15);}
+  #results{display:none;}
+  .res-title{font-size:13px;font-weight:700;color:var(--blue-dark);margin:16px 0 10px;}
+  .res-none{text-align:center;color:var(--muted);font-size:14px;padding:24px 0;}
+  .res-item{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(30,42,49,0.05);}
+  .res-item .res-body{flex:1;min-width:0;}
+  .res-item .res-cmd{font-family:'Rubik',sans-serif;font-weight:700;font-size:15px;color:var(--blue-dark);}
+  .res-item .res-prev{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+  .res-item .res-open{font-size:12px;color:var(--blue-dark);font-weight:600;text-decoration:none;display:inline-block;margin-top:5px;}
+  .res-item .copy-btn{flex-shrink:0;width:36px;height:36px;border-radius:50%;border:none;background:var(--blue-dark);color:#fff;font-size:18px;font-weight:700;cursor:pointer;line-height:1;}
+  .res-item .copy-btn.copied{background:var(--mint-dark);}
   .next-meet{background:linear-gradient(120deg,#e8f1f8 0%,#f0f7fb 100%);border:1.5px solid #c9dfee;border-radius:18px;padding:16px 14px;margin-bottom:24px;text-align:center;}
   .next-meet .nm-title{font-family:'Rubik',sans-serif;font-weight:700;font-size:17px;color:var(--blue-dark);}
   .next-meet .nm-sub{font-size:12.5px;color:var(--muted);margin-top:4px;}
@@ -137,6 +150,9 @@
 <div id="wrap">
   <h1 class="page-title">קיצורי דרך לצוות</h1>
   <div class="page-sub">כל הקישורים השוטפים במקום אחד</div>
+
+  <div class="search"><input id="q" type="search" placeholder="חיפוש: קיצורים, אקסל, תסריט מכירה, סליקה..." autocomplete="off"></div>
+  <div id="results"></div>
 
   <div class="next-meet">
     <div class="nm-title" id="nm-title">הפגישה הבאה: ...</div>
@@ -240,5 +256,62 @@
 
   <div class="footer-note">דף פרטי לצוות, לא מיועד לשיתוף פומבי</div>
 </div>
+<script src="shortcuts-data.js"></script>
+<script>
+(function(){
+  var qEl=document.getElementById('q'), res=document.getElementById('results');
+  var hideEls=[].slice.call(document.querySelectorAll('.next-meet,.group,.footer-note'));
+
+  // כרטיסי הדף הראשי: טקסט הכרטיס + שם הקבוצה + מילים נרדפות לפי סוג הקישור
+  var cards=[].slice.call(document.querySelectorAll('.group .card')).map(function(a){
+    var g=a.closest('.group').querySelector('.group-title').textContent;
+    var href=a.getAttribute('href')||'';
+    var extra='';
+    if(href.indexOf('spreadsheets')>-1) extra=' אקסל excel xls גיליון גוגל שיטס sheet';
+    else if(href.indexOf('/document/')>-1) extra=' מסמך דוק גוגל docs תסריט שיחה שיחת מכירה';
+    else if(href.indexOf('cardcom')>-1) extra=' תשלום אשראי קארדקום סליקה';
+    else if(href.indexOf('orders')>-1) extra=' הזמנות טוני';
+    if(g.indexOf('תסריטי מכירה')>-1) extra+=' שיחת מכירה שיחה מכירות תסריט';
+    return {a:a, hay:a.textContent+' '+g+extra};
+  });
+
+  function copy(text,btn){
+    function done(){btn.textContent='✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='+';btn.classList.remove('copied');},1500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback);}else fallback();
+    function fallback(){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);done();}
+  }
+
+  function render(){
+    var q=qEl.value;
+    if(!normSearch(q)){res.style.display='none';res.innerHTML='';hideEls.forEach(function(e){e.style.display='';});return;}
+    hideEls.forEach(function(e){e.style.display='none';});
+    res.style.display='block';res.innerHTML='';
+    var cm=cards.filter(function(c){return matchesAll(c.hay,q);});
+    var sm=ITEMS.filter(function(it){return matchesAll(it.cmd+' '+it.text,q);});
+    if(!cm.length&&!sm.length){var n=document.createElement('div');n.className='res-none';n.textContent='לא נמצא כלום, נסי מילה אחרת';res.appendChild(n);return;}
+    if(cm.length){
+      var t=document.createElement('div');t.className='res-title';t.textContent='קישורים ('+cm.length+')';res.appendChild(t);
+      var grid=document.createElement('div');grid.className='grid grid-3';
+      cm.forEach(function(c){grid.appendChild(c.a.cloneNode(true));});
+      res.appendChild(grid);
+    }
+    if(sm.length){
+      var t2=document.createElement('div');t2.className='res-title';t2.textContent='קיצורי דרך שימושיים ('+sm.length+')';res.appendChild(t2);
+      sm.forEach(function(it){
+        var d=document.createElement('div');d.className='res-item';
+        var b=document.createElement('div');b.className='res-body';
+        var c=document.createElement('div');c.className='res-cmd';c.textContent=it.cmd;
+        var p=document.createElement('div');p.className='res-prev';p.textContent=it.text;
+        var o=document.createElement('a');o.className='res-open';o.href='shortcuts.html?q='+encodeURIComponent(q);o.textContent='לפתיחה בעמוד הקיצורים';
+        b.appendChild(c);b.appendChild(p);b.appendChild(o);
+        var btn=document.createElement('button');btn.type='button';btn.className='copy-btn';btn.textContent='+';
+        btn.addEventListener('click',function(){copy(it.text,btn);});
+        d.appendChild(b);d.appendChild(btn);res.appendChild(d);
+      });
+    }
+  }
+  qEl.addEventListener('input',render);
+})();
+</script>
 </body>
 </html>
