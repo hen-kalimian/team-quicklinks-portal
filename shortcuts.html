@@ -115,6 +115,10 @@
     cursor:pointer;
   }
   .link-btn.copied{background:var(--mint-dark);}
+  .item-img{max-width:100%;width:340px;height:auto;border-radius:8px;border:1px solid var(--border);display:block;margin:0 auto;}
+  .img-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+  .img-actions .link-btn{margin:0;text-decoration:none;display:inline-block;text-align:center;}
+  .img-actions .dl-btn{background:var(--blue-dark);}
   .search{position:relative;margin-bottom:18px;}
   .search input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:14px;background:#fff;font-family:'Open Sans','Rubik',sans-serif;font-size:16px;color:var(--text);outline:none;}
   .search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(70,124,156,.15);}
@@ -158,8 +162,40 @@
       </div>
       <div class="box"></div>
     `;
-    div.querySelector('.box').textContent = it.text;
     const btn = div.querySelector('.copy-btn');
+    if (it.image) {
+      const box = div.querySelector('.box');
+      box.style.whiteSpace = 'normal';
+      box.style.textAlign = 'center';
+      const im = document.createElement('img');
+      im.src = it.image; im.alt = it.imageName || it.cmd; im.className = 'item-img';
+      box.appendChild(im);
+      const doCopy = async (el, okText, idleText, isRound) => {
+        try {
+          await copyImage(it.image);
+          el.textContent = okText;
+        } catch (e) {
+          el.textContent = isRound ? '!' : 'לא נתמך בדפדפן הזה, אפשר להוריד';
+        }
+        el.classList.add('copied');
+        setTimeout(() => { el.textContent = idleText; el.classList.remove('copied'); }, 2200);
+      };
+      btn.addEventListener('click', () => doCopy(btn, '✓', '+', true));
+      const row = document.createElement('div');
+      row.className = 'img-actions';
+      const cb = document.createElement('button');
+      cb.type = 'button'; cb.className = 'link-btn'; cb.textContent = 'העתקת התמונה';
+      cb.addEventListener('click', () => doCopy(cb, '✓ התמונה הועתקה', 'העתקת התמונה', false));
+      const dl = document.createElement('a');
+      dl.className = 'link-btn dl-btn'; dl.textContent = 'הורדת התמונה';
+      dl.href = it.image; dl.setAttribute('download', it.imageName || 'image.jpg');
+      row.appendChild(cb); row.appendChild(dl);
+      div.appendChild(row);
+      div._hay = itemHay(it);
+      list.appendChild(div);
+      return;
+    }
+    div.querySelector('.box').textContent = it.text;
     btn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(it.text);
@@ -197,7 +233,7 @@
       });
       div.appendChild(lb);
     }
-    div._hay = it.cmd + ' ' + it.text;
+    div._hay = itemHay(it);
     list.appendChild(div);
   });
 

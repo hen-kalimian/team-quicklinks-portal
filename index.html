@@ -287,7 +287,7 @@
     hideEls.forEach(function(e){e.style.display='none';});
     res.style.display='block';res.innerHTML='';
     var cm=cards.filter(function(c){return matchesAll(c.hay,q);});
-    var sm=ITEMS.filter(function(it){return matchesAll(it.cmd+' '+it.text,q);});
+    var sm=ITEMS.filter(function(it){return matchesAll(itemHay(it),q);});
     if(!cm.length&&!sm.length){var n=document.createElement('div');n.className='res-none';n.textContent='לא נמצא כלום, נסי מילה אחרת';res.appendChild(n);return;}
     if(cm.length){
       var t=document.createElement('div');t.className='res-title';t.textContent='קישורים ('+cm.length+')';res.appendChild(t);
@@ -302,10 +302,16 @@
         var b=document.createElement('div');b.className='res-body';
         var c=document.createElement('div');c.className='res-cmd';c.textContent=it.cmd;
         var p=document.createElement('div');p.className='res-prev';p.textContent=it.text;
-        var o=document.createElement('a');o.className='res-open';o.href='shortcuts.html?q='+encodeURIComponent(q);o.textContent='לפתיחה בעמוד הקיצורים';
-        b.appendChild(c);b.appendChild(p);b.appendChild(o);
+        var th=null;
+        if(it.image){th=document.createElement('img');th.src=it.image;th.alt=it.cmd;th.style.cssText='width:70px;height:auto;border-radius:6px;border:1px solid var(--border);margin-top:6px;display:block';}
+        var o=document.createElement('a');o.className='res-open';o.href='shortcuts.html?q='+encodeURIComponent(q);o.textContent='לפתיחה בעמוד הקיצורים (העתקה והורדה)';
+        b.appendChild(c);b.appendChild(p);if(th)b.appendChild(th);b.appendChild(o);
         var btn=document.createElement('button');btn.type='button';btn.className='copy-btn';btn.textContent='+';
-        btn.addEventListener('click',function(){copy(it.text,btn);});
+        btn.addEventListener('click',function(){
+          if(!it.image){copy(it.text,btn);return;}
+          copyImage(it.image).then(function(){btn.textContent='✓';btn.classList.add('copied');},function(){btn.textContent='!';})
+            .then(function(){setTimeout(function(){btn.textContent='+';btn.classList.remove('copied');},2000);});
+        });
         d.appendChild(b);d.appendChild(btn);res.appendChild(d);
       });
     }
